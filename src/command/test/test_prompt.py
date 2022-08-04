@@ -48,6 +48,25 @@ class TestCommandPrompt(unittest.TestCase):
         self.assertIn('some', tokens)
         self.assertIn('strings', tokens)
 
+    def test_default_handler(self):
+        tokens = []
+        def handler(*_): tokens.extend(('some', 'strings'))
+        self.cmd.register_default(handler)
+        self.cmd.process_input_string('test')
+        self.assertEqual(2, len(tokens))
+        self.assertIn('some', tokens)
+        self.assertIn('strings', tokens)
+
+    def test_default_handler_with_args(self):
+        tokens = []
+        def handler(*t): tokens.extend(t)
+        self.cmd.register_default(handler)
+        self.cmd.process_input_string('test some strings')
+        self.assertEqual(3, len(tokens))
+        self.assertIn('test', tokens)
+        self.assertIn('some', tokens)
+        self.assertIn('strings', tokens)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,4 +1,4 @@
-from command.handler import Handler
+from .handler import Handler
 
 
 class Prompt:

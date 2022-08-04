@@ -1,1 +1,2 @@
-from command.prompt import Prompt
+from .prompt import Prompt
+

@@ -28,7 +28,7 @@ def main():
 
 def parse_cli_args():
     args = argparse.ArgumentParser(description='Example command console')
-    args.add_argument('-t', '--test', help='Run script tests', action='store_true')
+    args.add_argument('-t', '--test', help='Run project tests', action='store_true')
     return args.parse_args()
 
 

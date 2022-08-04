@@ -13,7 +13,7 @@ class TestCommandPrompt(unittest.TestCase):
 
     def test_register(self):
         tokens = []
-        handler = lambda *t: tokens.extend(t)
+        def handler(*t): tokens.extend(t)
         self.cmd.register_command('test', handler)
         self.cmd.fire_command('test', 'some', 'strings')
         self.assertEqual(2, len(tokens))
@@ -21,14 +21,14 @@ class TestCommandPrompt(unittest.TestCase):
         self.assertIn('strings', tokens)
 
     def test_register_duplicate(self):
-        handler = lambda *_: ...
+        def handler(*_): ...
         self.cmd.register_command('test', handler)
         with self.assertRaises(ValueError):
             self.cmd.register_command('test', handler)
 
     def test_input_string_command_only(self):
         tokens = []
-        handler = lambda *_: tokens.extend(('some', 'strings'))
+        def handler(*_): tokens.extend(('some', 'strings'))
         self.cmd.register_command('test', handler)
         self.cmd.process_input_string('test')
         self.assertEqual(2, len(tokens))
@@ -41,7 +41,7 @@ class TestCommandPrompt(unittest.TestCase):
 
     def test_input_string(self):
         tokens = []
-        handler = lambda *t: tokens.extend(t)
+        def handler(*t): tokens.extend(t)
         self.cmd.register_command('test', handler)
         self.cmd.process_input_string('test some strings')
         self.assertEqual(2, len(tokens))

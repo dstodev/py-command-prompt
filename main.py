@@ -1,5 +1,4 @@
 import argparse
-import sys
 
 from command import Prompt
 
@@ -8,7 +7,7 @@ def main():
     prompt = Prompt()
     resume = True
 
-    def quit_handler(*args):
+    def quit_handler(*_args):
         nonlocal resume
         resume = False
 
@@ -30,14 +29,14 @@ def main():
 def parse_cli_args():
     args = argparse.ArgumentParser(description='Example command console')
     args.add_argument('-t', '--test', help='Run script tests', action='store_true')
-    cli = args.parse_args()
-    return cli
+    return args.parse_args()
 
 
 if __name__ == '__main__':
     cli = parse_cli_args()
     if cli.test:
         import unittest as ut
+
         test_loader = ut.TestLoader()
         test_suite = test_loader.discover('src')
         test_runner = ut.TextTestRunner()

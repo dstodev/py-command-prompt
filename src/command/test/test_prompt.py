@@ -67,6 +67,22 @@ class TestCommandPrompt(unittest.TestCase):
         self.assertIn('some', tokens)
         self.assertIn('strings', tokens)
 
+    def test_input_string_is_empty(self):
+        with self.assertRaises(ValueError):
+            self.cmd.process_input_string('')
+
+    def test_input_string_is_space(self):
+        with self.assertRaises(ValueError):
+            self.cmd.process_input_string(' ')
+
+    def test_default_handler_fires_when_empty_input_string(self):
+        tokens = []
+        def handler(*t): tokens.extend(t)
+        self.cmd.register_default(handler)
+        self.cmd.process_input_string('')
+        self.assertEqual(1, len(tokens))
+        self.assertIn('', tokens)
+
 
 if __name__ == '__main__':
     unittest.main()

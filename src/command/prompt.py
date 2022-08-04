@@ -15,13 +15,16 @@ class Prompt:
         self._default = default_handler
 
     def process_input_string(self, input_string: str):
-        if input_string:
-            tokens = self.parse_input_string(input_string)
-            self.fire_command(*tokens)  # 'symbol' arg is the first token in the list
+        tokens = self.parse_input_string(input_string)
+        self.fire_command(*tokens)  # 'symbol' arg is the first token in the list
 
     @staticmethod
     def parse_input_string(input_string: str):
-        return input_string.split()
+        tokens = input_string.split()
+        if tokens:
+            return tokens
+        else:
+            return ['']
 
     def fire_command(self, symbol: str, *args: str):
         try:

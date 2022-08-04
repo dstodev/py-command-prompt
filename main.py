@@ -1,6 +1,5 @@
 import argparse
 import sys
-import unittest
 
 from command import Prompt
 
@@ -38,7 +37,10 @@ def parse_cli_args():
 if __name__ == '__main__':
     cli = parse_cli_args()
     if cli.test:
-        argv = [sys.argv[0]]
-        unittest.main(argv=argv)
+        import unittest as ut
+        test_loader = ut.TestLoader()
+        test_suite = test_loader.discover('src')
+        test_runner = ut.TextTestRunner()
+        test_runner.run(test_suite)
     else:
         main()
